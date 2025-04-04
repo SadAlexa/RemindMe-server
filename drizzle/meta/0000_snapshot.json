@@ -1,5 +1,5 @@
 {
-  "id": "809bebf6-e17f-4011-be0c-de4e9635f939",
+  "id": "55d5fb0e-d6b4-47cc-8424-cbae9777f501",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -354,6 +354,18 @@
         },
         "image": {
           "name": "image",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "salt": {
+          "name": "salt",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true

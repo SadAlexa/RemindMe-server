@@ -1,19 +1,22 @@
-import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DatabaseModule } from './db/database.module';
+import { AuthModule } from './user/auth.module';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './user/middleware';
+import { JwtGuard } from './user/guard/jwt.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
-  imports: [
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: '.env',
-    }),
-    DatabaseModule.forRoot(process.env.DATABASE_URL!),
-  ],
+  imports: [AuthModule, JwtModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtGuard,
+    },
+    JwtStrategy,
+  ],
 })
 export class AppModule {}
