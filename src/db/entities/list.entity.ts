@@ -9,9 +9,8 @@ export const listsTable = pgTable('lists', {
   userId: integer('user_id').notNull(),
   body: text('body'),
   image: text('image'),
-  isShared: boolean('is_shared').default(false),
+  isShared: boolean('is_shared').default(false).notNull(),
   sharedUserId: integer('shared_user_id'),
-  isFavorite: boolean('is_favorite').default(false),
   categoryId: integer('category_id'),
 });
 

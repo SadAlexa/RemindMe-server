@@ -6,9 +6,9 @@ import { achievementsTable } from './achievement.entity';
 export const userAchievementsTable = pgTable('user_achievements', {
   achievementId: integer('achievement_id').notNull(),
   userId: integer('user_id').notNull(),
-  isCompleted: boolean('is_completed').default(false),
-  isNotified: boolean('is_notified').default(false),
-  number: integer('number').default(0),
+  isCompleted: boolean('is_completed').default(false).notNull(),
+  isNotified: boolean('is_notified').default(false).notNull(),
+  number: integer('number').default(0).notNull(),
 });
 
 export const userAchievementsRelations = relations(

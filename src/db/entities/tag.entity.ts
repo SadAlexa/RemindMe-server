@@ -6,7 +6,7 @@ import { usersTable } from './user.entity';
 export const tagsTable = pgTable('tags', {
   id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   title: varchar('title').notNull(),
-  listId: varchar('list_id').notNull(),
+  listId: integer('list_id').notNull(),
   userId: integer('user_id').notNull(),
 });
 

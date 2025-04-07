@@ -6,9 +6,26 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './user/middleware';
 import { JwtGuard } from './user/guard/jwt.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { CategoryModule } from './category/category.module';
+import { ListModule } from './list/list.module';
+import { TagModule } from './tag/tag.module';
+import { TagsOnTaskModule } from './tags-on-task/tags-on-task.module';
+import { UserAchievementModule } from './user-achievement/user-achievement.module';
+import { NotificationModule } from './notification/notification.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
-  imports: [AuthModule, JwtModule],
+  imports: [
+    AuthModule,
+    JwtModule,
+    CategoryModule,
+    ListModule,
+    TagModule,
+    TaskModule,
+    TagsOnTaskModule,
+    UserAchievementModule,
+    NotificationModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,

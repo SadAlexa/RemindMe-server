@@ -11,10 +11,10 @@ export const notificationsTable = pgTable('notifications', {
   userId: integer('user_id').notNull(),
   senderUserId: integer('sender_user_id'),
   sendTime: integer('send_time').notNull(),
-  isRead: boolean('is_read').default(false),
+  isRead: boolean('is_read').default(false).notNull(),
   taskId: integer('task_id'),
   taskTitle: varchar('task_title'),
-  taskListId: varchar('task_list_id'),
+  taskListId: integer('task_list_id'),
   achievementId: integer('achievement_id'),
 });
 
