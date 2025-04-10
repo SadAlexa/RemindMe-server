@@ -9,10 +9,10 @@ import { tasksTable } from 'src/db/entities';
 export class TaskService {
   constructor(@Inject(DB_INJECTION_KEY) private readonly db: DrizzleRemindMe) {}
 
-  async getTasks(listId: number): Promise<Array<Task>> {
+  async getTasks(userId: number): Promise<Array<Task>> {
     return await this.db.query.tasksTable
       .findMany({
-        where: eq(tasksTable.listId, listId),
+        where: eq(tasksTable.userId, userId),
       })
       .then((tasks) =>
         tasks.map(

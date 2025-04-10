@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { AuthController } from './controller/auth.controller';
 import { AuthService, UsersService } from './service';
 import { JwtStrategy, LocalStrategy } from './middleware';
 import { DatabaseModule } from 'src/db/database.module';
+import { JwtConfigModule } from 'src/utils/jwt-config.module';
 
 @Module({
   imports: [
@@ -13,23 +13,10 @@ import { DatabaseModule } from 'src/db/database.module';
       envFilePath: '.env',
     }),
     DatabaseModule.forRoot(process.env.DATABASE_URL!),
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
-        signOptions: {
-          expiresIn: parseInt(
-            configService.getOrThrow<string>(
-              'ACCESS_TOKEN_VALIDITY_DURATION_IN_SEC',
-            ),
-          ),
-        },
-      }),
-      inject: [ConfigService],
-    }),
+    JwtConfigModule,
   ],
   controllers: [AuthController],
   providers: [UsersService, AuthService, LocalStrategy, JwtStrategy],
-  exports: [AuthService, JwtModule],
+  exports: [AuthService],
 })
 export class AuthModule {}

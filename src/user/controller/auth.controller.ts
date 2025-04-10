@@ -3,12 +3,16 @@ import {
   Body,
   Controller,
   Post,
-  Request,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../service';
-import { CreateUserDto, LoginResponseDTO, RegisterResponseDTO } from '../dto';
+import {
+  CreateUserDto,
+  GetUserDto,
+  LoginResponseDTO,
+  RegisterResponseDTO,
+} from '../dto';
 import { Public } from 'src/public.decorator';
 
 @Controller('auth')
@@ -18,9 +22,14 @@ export class AuthController {
   @Public()
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Request() req): Promise<LoginResponseDTO | BadRequestException> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-    return await this.authService.login(req.user);
+  async login(
+    @Body() user: GetUserDto,
+  ): Promise<LoginResponseDTO | BadRequestException> {
+    const userFound = await this.authService.validateUser(
+      user.email,
+      user.password,
+    );
+    return await this.authService.login(userFound);
   }
 
   @Public()

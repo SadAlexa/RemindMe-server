@@ -9,10 +9,10 @@ import { tagsTable } from 'src/db/entities';
 export class TagService {
   constructor(@Inject(DB_INJECTION_KEY) private readonly db: DrizzleRemindMe) {}
 
-  async getTags(listId: number): Promise<Array<Tag>> {
+  async getTags(userId: number): Promise<Array<Tag>> {
     return await this.db.query.tagsTable
       .findMany({
-        where: eq(tagsTable.listId, listId),
+        where: eq(tagsTable.userId, userId),
       })
       .then((tags) =>
         tags.map((tag) => new Tag(tag.title, tag.listId, tag.userId, tag.id)),

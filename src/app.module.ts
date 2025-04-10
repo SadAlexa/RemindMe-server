@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './user/auth.module';
-import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './user/middleware';
 import { JwtGuard } from './user/guard/jwt.guard';
 import { APP_GUARD } from '@nestjs/core';
@@ -13,11 +12,12 @@ import { TagsOnTaskModule } from './tags-on-task/tags-on-task.module';
 import { UserAchievementModule } from './user-achievement/user-achievement.module';
 import { NotificationModule } from './notification/notification.module';
 import { TaskModule } from './task/task.module';
+import { JwtConfigModule } from './utils/jwt-config.module';
 
 @Module({
   imports: [
     AuthModule,
-    JwtModule,
+    JwtConfigModule,
     CategoryModule,
     ListModule,
     TagModule,

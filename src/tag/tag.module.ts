@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from 'src/db/database.module';
 import { TagController } from './controller/tag.controller';
 import { TagService } from './service/tag.service';
+import { JwtConfigModule } from 'src/utils/jwt-config.module';
+import { JwtDecodeService } from 'src/utils/jwt-decode.service';
 
 @Module({
   imports: [
@@ -11,9 +13,10 @@ import { TagService } from './service/tag.service';
       envFilePath: '.env',
     }),
     DatabaseModule.forRoot(process.env.DATABASE_URL!),
+    JwtConfigModule,
   ],
   controllers: [TagController],
-  providers: [TagService],
+  providers: [TagService, JwtDecodeService],
   exports: [TagService],
 })
 export class TagModule {}
