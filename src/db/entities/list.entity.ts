@@ -4,7 +4,7 @@ import { usersTable } from './user.entity';
 import { categoriesTable } from './category.entity';
 
 export const listsTable = pgTable('lists', {
-  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+  id: integer('id').primaryKey(),
   title: varchar('title').notNull(),
   userId: integer('user_id').notNull(),
   body: text('body'),

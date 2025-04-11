@@ -34,7 +34,7 @@ export class UsersService {
     };
   }
 
-  async update(user: User): Promise<void> {
+  async updateUser(user: User): Promise<void> {
     await this.db
       .update(usersTable)
       .set({
@@ -42,5 +42,22 @@ export class UsersService {
         image: user.image,
       })
       .where(eq(usersTable.id, user.id ?? 0));
+  }
+
+  async getUser(id: number): Promise<User> {
+    const user = await this.db.query.usersTable.findFirst({
+      where: eq(usersTable.id, id),
+    });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      image: user.image,
+      password: user.password,
+      salt: user.salt,
+    };
   }
 }

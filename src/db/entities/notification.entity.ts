@@ -5,7 +5,7 @@ import { tasksTable } from './task.entity';
 import { userAchievementsTable } from './user-achievement.entity';
 
 export const notificationsTable = pgTable('notifications', {
-  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+  id: integer('id').primaryKey(),
   title: varchar('title').notNull(),
   body: varchar('body').notNull(),
   userId: integer('user_id').notNull(),

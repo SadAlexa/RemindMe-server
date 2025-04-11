@@ -18,6 +18,7 @@ export class ListService {
         lists.map(
           (list) =>
             new List(
+              list.id,
               list.title,
               list.userId,
               list.isShared,
@@ -25,7 +26,6 @@ export class ListService {
               list.image,
               list.sharedUserId,
               list.categoryId,
-              list.id,
             ),
         ),
       );

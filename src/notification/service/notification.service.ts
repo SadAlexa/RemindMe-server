@@ -18,6 +18,7 @@ export class NotificationService {
         notifications.map(
           (notification) =>
             new Notification(
+              notification.id,
               notification.title,
               notification.body,
               notification.userId,

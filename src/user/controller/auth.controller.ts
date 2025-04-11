@@ -23,12 +23,9 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('login')
   async login(
-    @Body() user: GetUserDto,
+    @Body() credentials: GetUserDto,
   ): Promise<LoginResponseDTO | BadRequestException> {
-    const userFound = await this.authService.validateUser(
-      user.email,
-      user.password,
-    );
+    const userFound = await this.authService.validateUser(credentials);
     return await this.authService.login(userFound);
   }
 

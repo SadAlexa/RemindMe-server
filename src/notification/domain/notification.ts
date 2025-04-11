@@ -1,5 +1,6 @@
 export class Notification {
   constructor(
+    public readonly id: number,
     public readonly title: string,
     public readonly body: string,
     public readonly userId: number,
@@ -10,6 +11,5 @@ export class Notification {
     public readonly taskListId?: number | null,
     public readonly senderUserId?: number | null,
     public readonly achievementId?: number | null,
-    public readonly id?: number,
   ) {}
 }

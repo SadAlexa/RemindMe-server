@@ -18,6 +18,7 @@ export class TaskService {
         tasks.map(
           (task) =>
             new Task(
+              task.id,
               task.title,
               task.listId,
               task.userId,
@@ -29,7 +30,6 @@ export class TaskService {
               task.image,
               task.latitude,
               task.longitude,
-              task.id,
             ),
         ),
       );

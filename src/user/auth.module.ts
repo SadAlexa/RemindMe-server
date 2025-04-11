@@ -5,6 +5,7 @@ import { AuthService, UsersService } from './service';
 import { JwtStrategy, LocalStrategy } from './middleware';
 import { DatabaseModule } from 'src/db/database.module';
 import { JwtConfigModule } from 'src/utils/jwt-config.module';
+import { UserController } from './controller/user.controller';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { JwtConfigModule } from 'src/utils/jwt-config.module';
     DatabaseModule.forRoot(process.env.DATABASE_URL!),
     JwtConfigModule,
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, UserController],
   providers: [UsersService, AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],
 })

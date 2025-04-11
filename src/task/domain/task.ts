@@ -1,5 +1,6 @@
 export class Task {
   constructor(
+    public readonly id: number,
     public readonly title: string,
     public readonly listId: number,
     public readonly userId: number,
@@ -11,6 +12,5 @@ export class Task {
     public readonly image?: string | null,
     public readonly latitude?: number | null,
     public readonly longitude?: number | null,
-    public readonly id?: number,
   ) {}
 }

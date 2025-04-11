@@ -15,7 +15,7 @@ export class TagService {
         where: eq(tagsTable.userId, userId),
       })
       .then((tags) =>
-        tags.map((tag) => new Tag(tag.title, tag.listId, tag.userId, tag.id)),
+        tags.map((tag) => new Tag(tag.id, tag.title, tag.listId, tag.userId)),
       );
   }
 

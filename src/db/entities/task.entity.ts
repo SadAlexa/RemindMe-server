@@ -11,7 +11,7 @@ import { usersTable } from './user.entity';
 import { listsTable } from './list.entity';
 
 export const tasksTable = pgTable('tasks', {
-  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+  id: integer('id').primaryKey(),
   title: varchar('title').notNull(),
   listId: integer('list_id').notNull(),
   userId: integer('user_id').notNull(),
