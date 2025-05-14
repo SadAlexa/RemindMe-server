@@ -25,7 +25,10 @@ export class AuthController {
   async login(
     @Body() credentials: GetUserDto,
   ): Promise<LoginResponseDTO | BadRequestException> {
-    const userFound = await this.authService.validateUser(credentials);
+    const userFound = await this.authService.validateUser(
+      credentials.email,
+      credentials.password,
+    );
     return await this.authService.login(userFound);
   }
 

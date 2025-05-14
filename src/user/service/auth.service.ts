@@ -3,12 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from './users.service';
 import { User } from '../domain';
-import {
-  CreateUserDto,
-  GetUserDto,
-  LoginResponseDTO,
-  RegisterResponseDTO,
-} from '../dto';
+import { CreateUserDto, LoginResponseDTO, RegisterResponseDTO } from '../dto';
 
 @Injectable()
 export class AuthService {
@@ -16,15 +11,17 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
   ) {}
-  async validateUser(credentials: GetUserDto): Promise<User> {
-    const user: User | undefined = await this.usersService.findByEmail(
-      credentials.email,
-    );
-    if (!user) {
+  async validateUser(email: string, password: string): Promise<User> {
+    const user: User | undefined = await this.usersService.findByEmail(email);
+    if (user === undefined) {
       throw new BadRequestException('User not found');
     }
+
+    console.log(`DB password: "${user.password}"`);
+    console.log(`Password:    "${password}"`);
+
     const isMatch: boolean = bcrypt.compareSync(
-      credentials.password + user.salt,
+      password + user.salt,
       user.password,
     );
     if (!isMatch) {

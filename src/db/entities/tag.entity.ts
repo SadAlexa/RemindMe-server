@@ -1,12 +1,12 @@
-import { integer, pgTable, varchar } from 'drizzle-orm/pg-core';
+import { integer, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm/relations';
 import { listsTable } from './list.entity';
 import { usersTable } from './user.entity';
 
 export const tagsTable = pgTable('tags', {
-  id: integer('id').primaryKey(),
+  id: uuid('id').primaryKey(),
   title: varchar('title').notNull(),
-  listId: integer('list_id').notNull(),
+  listId: uuid('list_id').notNull(),
   userId: integer('user_id').notNull(),
 });
 

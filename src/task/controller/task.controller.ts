@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { TaskService } from '../service/task.service';
 import { Task } from '../domain';
 import { JwtDecodeService } from 'src/utils/jwt-decode.service';
+import { TaskDTO } from '../dto/tasks.dto';
 
 @Controller('task')
 export class TaskController {
@@ -11,9 +12,8 @@ export class TaskController {
   ) {}
 
   @Post()
-  async insertTasks(@Request() req): Promise<void> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-    await this.taskService.insertTasks(req.body);
+  async insertTasks(@Body() tasksDTO: Array<TaskDTO>): Promise<void> {
+    await this.taskService.insertTasks(tasksDTO);
   }
 
   @Get()

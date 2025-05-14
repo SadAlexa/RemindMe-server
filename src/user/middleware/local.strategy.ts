@@ -3,7 +3,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { AuthService } from '../service';
 import { User } from '../domain';
-import { GetUserDto } from '../dto';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -12,10 +11,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       usernameField: 'email',
     });
   }
-  async validate(credentials: GetUserDto): Promise<User> {
-    const user = await this.authService.validateUser(credentials);
-    if (!user) {
-      throw new UnauthorizedException();
+  async validate(email: string, password: string): Promise<User> {
+    const user = await this.authService.validateUser(email, password);
+    if (user === undefined) {
+      throw new UnauthorizedException("User doesn't exist");
     }
     return user;
   }

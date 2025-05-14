@@ -18,30 +18,31 @@ export class UsersService {
     });
   }
   async findByEmail(email: string): Promise<User | undefined> {
+    console.log(email);
     const user = await this.db.query.usersTable.findFirst({
       where: eq(usersTable.email, email),
     });
-    if (!user) {
+    if (user === undefined) {
       return undefined;
     }
-    return {
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      image: user.image,
-      password: user.password,
-      salt: user.salt,
-    };
+    return new User(
+      user.username,
+      user.email,
+      user.salt,
+      user.password,
+      user.image,
+      user.id,
+    );
   }
 
-  async updateUser(user: User): Promise<void> {
+  async updateUser(user: User, id: number): Promise<void> {
     await this.db
       .update(usersTable)
       .set({
         username: user.username,
         image: user.image,
       })
-      .where(eq(usersTable.id, user.id ?? 0));
+      .where(eq(usersTable.id, id));
   }
 
   async getUser(id: number): Promise<User> {

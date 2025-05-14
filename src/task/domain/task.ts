@@ -1,8 +1,8 @@
 export class Task {
   constructor(
-    public readonly id: number,
+    public readonly id: string,
     public readonly title: string,
-    public readonly listId: number,
+    public readonly listId: string,
     public readonly userId: number,
     public readonly isDone: boolean,
     public readonly body?: string | null,

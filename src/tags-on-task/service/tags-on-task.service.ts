@@ -12,7 +12,7 @@ export class TagsOnTaskService {
   async getTagsOnTasks(userId: number): Promise<Array<TagsOnTask>> {
     return await this.db.query.tagsOnTaskTable
       .findMany({
-        where: eq(tagsOnTaskTable.taskId, userId),
+        where: eq(tagsOnTaskTable.taskUserId, userId),
       })
       .then((tagsOnTasks) =>
         tagsOnTasks.map(

@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { TagsOnTaskService } from '../service/tags-on-task.service';
 import { TagsOnTask } from '../domain';
 import { JwtDecodeService } from 'src/utils/jwt-decode.service';
+import { TagsOnTaskDTO } from '../dto/tags-on-task.dto';
 
 @Controller('tagsOnTask')
 export class TagsOnTaskController {
@@ -11,9 +12,10 @@ export class TagsOnTaskController {
   ) {}
 
   @Post()
-  async insertTagsOnTasks(@Request() req): Promise<void> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-    await this.TagsOnTaskService.insertTagsOnTasks(req.body);
+  async insertTagsOnTasks(
+    @Body() tagsOnTaskDTO: Array<TagsOnTaskDTO>,
+  ): Promise<void> {
+    await this.TagsOnTaskService.insertTagsOnTasks(tagsOnTaskDTO);
   }
 
   @Get()

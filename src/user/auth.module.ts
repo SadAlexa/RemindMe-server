@@ -6,6 +6,7 @@ import { JwtStrategy, LocalStrategy } from './middleware';
 import { DatabaseModule } from 'src/db/database.module';
 import { JwtConfigModule } from 'src/utils/jwt-config.module';
 import { UserController } from './controller/user.controller';
+import { JwtDecodeService } from 'src/utils/jwt-decode.service';
 
 @Module({
   imports: [
@@ -17,7 +18,13 @@ import { UserController } from './controller/user.controller';
     JwtConfigModule,
   ],
   controllers: [AuthController, UserController],
-  providers: [UsersService, AuthService, LocalStrategy, JwtStrategy],
+  providers: [
+    UsersService,
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    JwtDecodeService,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}

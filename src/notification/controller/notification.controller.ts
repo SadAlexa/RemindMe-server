@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { NotificationService } from '../service/notification.service';
 import { Notification } from '../domain';
 import { JwtDecodeService } from 'src/utils/jwt-decode.service';
+import { NotificationDTO } from '../dto/notifications.dto';
 
 @Controller('Notification')
 export class NotificationController {
@@ -11,9 +12,10 @@ export class NotificationController {
   ) {}
 
   @Post()
-  async insertNotifications(@Request() req): Promise<void> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-    await this.notificationService.insertNotifications(req.body);
+  async insertNotifications(
+    @Body() notificationsDTO: Array<NotificationDTO>,
+  ): Promise<void> {
+    await this.notificationService.insertNotifications(notificationsDTO);
   }
 
   @Get()

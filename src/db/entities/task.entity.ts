@@ -5,15 +5,16 @@ import {
   boolean,
   text,
   doublePrecision,
+  uuid,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm/relations';
 import { usersTable } from './user.entity';
 import { listsTable } from './list.entity';
 
 export const tasksTable = pgTable('tasks', {
-  id: integer('id').primaryKey(),
+  id: uuid('id').primaryKey(),
   title: varchar('title').notNull(),
-  listId: integer('list_id').notNull(),
+  listId: uuid('list_id').notNull(),
   userId: integer('user_id').notNull(),
   body: text('body'),
   endTime: integer('end_time'),

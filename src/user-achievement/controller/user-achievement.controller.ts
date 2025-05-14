@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { UserAchievementService } from '../service/user-achievement.service';
 import { UserAchievement } from '../domain';
 import { JwtDecodeService } from 'src/utils/jwt-decode.service';
+import { UserAchievementDTO } from '../dto/user-achievement.dto';
 
-@Controller('UserAchievement')
+@Controller('userAchievement')
 export class UserAchievementController {
   constructor(
     private UserAchievementService: UserAchievementService,
@@ -11,9 +12,12 @@ export class UserAchievementController {
   ) {}
 
   @Post()
-  async insertUserAchievements(@Request() req): Promise<void> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-    await this.UserAchievementService.insertUserAchievements(req.body);
+  async insertUserAchievements(
+    @Body() userAchievementsDTO: Array<UserAchievementDTO>,
+  ): Promise<void> {
+    await this.UserAchievementService.insertUserAchievements(
+      userAchievementsDTO,
+    );
   }
 
   @Get()

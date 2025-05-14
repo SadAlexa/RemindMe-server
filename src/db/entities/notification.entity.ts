@@ -1,20 +1,20 @@
-import { integer, pgTable, varchar, boolean } from 'drizzle-orm/pg-core';
+import { integer, pgTable, varchar, boolean, uuid } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm/relations';
 import { usersTable } from './user.entity';
 import { tasksTable } from './task.entity';
 import { userAchievementsTable } from './user-achievement.entity';
 
 export const notificationsTable = pgTable('notifications', {
-  id: integer('id').primaryKey(),
+  id: varchar('id').primaryKey(),
   title: varchar('title').notNull(),
   body: varchar('body').notNull(),
   userId: integer('user_id').notNull(),
   senderUserId: integer('sender_user_id'),
   sendTime: integer('send_time').notNull(),
   isRead: boolean('is_read').default(false).notNull(),
-  taskId: integer('task_id'),
+  taskId: uuid('task_id'),
   taskTitle: varchar('task_title'),
-  taskListId: integer('task_list_id'),
+  taskListId: uuid('task_list_id'),
   achievementId: integer('achievement_id'),
 });
 
