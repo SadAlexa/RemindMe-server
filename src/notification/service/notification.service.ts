@@ -35,6 +35,12 @@ export class NotificationService {
   }
 
   async insertNotifications(notifications: Array<Notification>): Promise<void> {
-    await this.db.insert(notificationsTable).values(notifications);
+    if (notifications.length === 0) {
+      return;
+    }
+    await this.db
+      .insert(notificationsTable)
+      .values(notifications)
+      .onConflictDoNothing();
   }
 }

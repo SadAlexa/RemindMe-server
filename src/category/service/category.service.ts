@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { DrizzleRemindMe } from 'src/db/database.module';
 import { categoriesTable } from 'src/db/entities';
 import { DB_INJECTION_KEY } from 'src/db/utils';
@@ -16,6 +16,14 @@ export class CategoryService {
   }
 
   async insertCategories(categories: Array<Category>): Promise<void> {
-    await this.db.insert(categoriesTable).values(categories);
+    await this.db
+      .insert(categoriesTable)
+      .values(categories)
+      .onConflictDoUpdate({
+        target: categoriesTable.id,
+        set: {
+          title: sql`excluded.title`,
+        },
+      });
   }
 }

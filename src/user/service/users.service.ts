@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DrizzleRemindMe } from 'src/db/database.module';
 import { DB_INJECTION_KEY } from 'src/db/utils';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { usersTable } from 'src/db/entities';
 import { User } from '../domain';
 
@@ -35,14 +35,27 @@ export class UsersService {
     );
   }
 
-  async updateUser(user: User, id: number): Promise<void> {
+  // async updateUser(user: User, id: number): Promise<void> {
+  //   await this.db
+  //     .update(usersTable)
+  //     .set({
+  //       username: user.username,
+  //       image: user.image,
+  //     })
+  //     .where(eq(usersTable.id, id));
+  // }
+
+  async updateUser(user: User): Promise<void> {
     await this.db
-      .update(usersTable)
-      .set({
-        username: user.username,
-        image: user.image,
-      })
-      .where(eq(usersTable.id, id));
+      .insert(usersTable)
+      .values(user)
+      .onConflictDoUpdate({
+        target: usersTable.id,
+        set: {
+          username: sql`excluded.username`,
+          image: sql`excluded.image`,
+        },
+      });
   }
 
   async getUser(id: number): Promise<User> {

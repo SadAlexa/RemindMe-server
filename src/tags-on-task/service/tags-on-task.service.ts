@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DrizzleRemindMe } from 'src/db/database.module';
 import { DB_INJECTION_KEY } from 'src/db/utils';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { tagsOnTaskTable } from 'src/db/entities';
 import { TagsOnTask } from '../domain';
 
@@ -28,6 +28,15 @@ export class TagsOnTaskService {
   }
 
   async insertTagsOnTasks(tagsOnTask: Array<TagsOnTask>): Promise<void> {
-    await this.db.insert(tagsOnTaskTable).values(tagsOnTask);
+    await this.db
+      .insert(tagsOnTaskTable)
+      .values(tagsOnTask)
+      .onConflictDoUpdate({
+        target: [tagsOnTaskTable.tagId, tagsOnTaskTable.taskId],
+        set: {
+          tagId: sql`excluded.tag_id`,
+          taskId: sql`excluded.task_id`,
+        },
+      });
   }
 }

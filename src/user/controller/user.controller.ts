@@ -24,11 +24,11 @@ export class UserController {
   @Post('user')
   async updateUser(@Request() req): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const token: string = req.headers.authorization as string;
+    // const token: string = req.headers.authorization as string;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const obj = await this.jwtDecodeService.decodeToken(token);
+    // const obj = await this.jwtDecodeService.decodeToken(token);
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-    return await this.usersService.updateUser(req.body, obj.id);
+    return await this.usersService.updateUser(req.body);
   }
 }

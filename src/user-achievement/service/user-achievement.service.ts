@@ -31,6 +31,12 @@ export class UserAchievementService {
   async insertUserAchievements(
     userAchievements: Array<UserAchievement>,
   ): Promise<void> {
-    await this.db.insert(userAchievementsTable).values(userAchievements);
+    if (userAchievements.length === 0) {
+      return;
+    }
+    await this.db
+      .insert(userAchievementsTable)
+      .values(userAchievements)
+      .onConflictDoNothing();
   }
 }
