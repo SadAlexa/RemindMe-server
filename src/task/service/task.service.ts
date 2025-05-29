@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { DrizzleRemindMe } from 'src/db/database.module';
 import { DB_INJECTION_KEY } from 'src/db/utils';
 import { Task } from '../domain';
-import { eq, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { tasksTable } from 'src/db/entities';
 
 @Injectable()
@@ -36,22 +36,10 @@ export class TaskService {
   }
 
   async insertTasks(tasks: Array<Task>): Promise<void> {
-    await this.db
-      .insert(tasksTable)
-      .values(tasks)
-      .onConflictDoUpdate({
-        target: tasksTable.id,
-        set: {
-          title: sql`excluded.title`,
-          isDone: sql`excluded.is_done`,
-          body: sql`excluded.body`,
-          endTime: sql`excluded.end_time`,
-          frequency: sql`excluded.frequency`,
-          alert: sql`excluded.alert`,
-          image: sql`excluded.image`,
-          latitude: sql`excluded.latitude`,
-          longitude: sql`excluded.longitude`,
-        },
-      });
+    await this.db.insert(tasksTable).values(tasks);
+  }
+
+  async deleteTasks(userId: number): Promise<void> {
+    await this.db.delete(tasksTable).where(eq(tasksTable.userId, userId));
   }
 }

@@ -38,9 +38,12 @@ export class NotificationService {
     if (notifications.length === 0) {
       return;
     }
+    await this.db.insert(notificationsTable).values(notifications);
+  }
+
+  async deleteNotifications(userId: number): Promise<void> {
     await this.db
-      .insert(notificationsTable)
-      .values(notifications)
-      .onConflictDoNothing();
+      .delete(notificationsTable)
+      .where(eq(notificationsTable.userId, userId));
   }
 }

@@ -34,9 +34,12 @@ export class UserAchievementService {
     if (userAchievements.length === 0) {
       return;
     }
+    await this.db.insert(userAchievementsTable).values(userAchievements);
+  }
+
+  async deleteUserAchievements(userId: number): Promise<void> {
     await this.db
-      .insert(userAchievementsTable)
-      .values(userAchievements)
-      .onConflictDoNothing();
+      .delete(userAchievementsTable)
+      .where(eq(userAchievementsTable.userId, userId));
   }
 }

@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { DrizzleRemindMe } from 'src/db/database.module';
 import { DB_INJECTION_KEY } from 'src/db/utils';
 import { Tag } from '../domain';
-import { eq, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { tagsTable } from 'src/db/entities';
 
 @Injectable()
@@ -20,14 +20,10 @@ export class TagService {
   }
 
   async insertTags(tags: Array<Tag>): Promise<void> {
-    await this.db
-      .insert(tagsTable)
-      .values(tags)
-      .onConflictDoUpdate({
-        target: tagsTable.id,
-        set: {
-          title: sql`excluded.title`,
-        },
-      });
+    await this.db.insert(tagsTable).values(tags);
+  }
+
+  async deleteTags(userId: number): Promise<void> {
+    await this.db.delete(tagsTable).where(eq(tagsTable.userId, userId));
   }
 }
