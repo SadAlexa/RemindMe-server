@@ -13,6 +13,7 @@ import { UserAchievementModule } from './user-achievement/user-achievement.modul
 import { NotificationModule } from './notification/notification.module';
 import { TaskModule } from './task/task.module';
 import { JwtConfigModule } from './utils/jwt-config.module';
+import { SyncModule } from './sync/sync.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { JwtConfigModule } from './utils/jwt-config.module';
     TagsOnTaskModule,
     UserAchievementModule,
     NotificationModule,
+    SyncModule,
   ],
   controllers: [AppController],
   providers: [

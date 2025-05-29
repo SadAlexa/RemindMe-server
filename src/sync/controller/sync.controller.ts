@@ -1,29 +1,27 @@
 import { Body, Controller, Get, Post, Request } from '@nestjs/common';
-import { TaskService } from '../service/task.service';
-import { Task } from '../domain';
 import { JwtDecodeService } from 'src/utils/jwt-decode.service';
-import { TaskDTO } from '../dto/tasks.dto';
+import { SyncProps, SyncService } from '../service/sync.service';
+import { SyncDTO } from '../dto/sync.dto';
 
-@Controller('task')
-export class TaskController {
+@Controller('sync')
+export class SyncController {
   constructor(
-    private taskService: TaskService,
+    private syncService: SyncService,
     private jwtDecodeService: JwtDecodeService,
   ) {}
 
   @Post()
-  async insertTasks(@Body() tasksDTO: Array<TaskDTO>): Promise<void> {
-    await this.taskService.insertTasks(tasksDTO);
+  async insertData(@Body() syncDTO: SyncDTO): Promise<void> {
+    await this.syncService.insertData(syncDTO);
   }
 
   @Get()
-  async getTasks(@Request() req): Promise<Array<Task>> {
+  async getData(@Request() req): Promise<SyncProps> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const token: string = req.headers.authorization as string;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const obj = await this.jwtDecodeService.decodeToken(token);
-    console.log(obj);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-    return await this.taskService.getTasks(obj.id);
+    return await this.syncService.getData(obj.id);
   }
 }
