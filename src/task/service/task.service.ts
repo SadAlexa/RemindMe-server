@@ -36,6 +36,9 @@ export class TaskService {
   }
 
   async insertTasks(tasks: Array<Task>): Promise<void> {
+    if (tasks.length === 0) {
+      return;
+    }
     await this.db.insert(tasksTable).values(tasks);
   }
 

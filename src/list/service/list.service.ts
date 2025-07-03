@@ -32,6 +32,9 @@ export class ListService {
   }
 
   async insertLists(lists: Array<List>): Promise<void> {
+    if (lists.length === 0) {
+      return;
+    }
     await this.db.insert(listsTable).values(lists);
   }
 

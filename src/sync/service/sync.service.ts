@@ -55,21 +55,15 @@ export class SyncService {
     });
   }
 
-  async insertData(data: SyncProps): Promise<void> {
+  async insertData(userId: number, data: SyncProps): Promise<void> {
     return await this.db.transaction(async () => {
-      await this.notificationService.deleteNotifications(
-        data.notifications[0].userId,
-      );
-      await this.userAchievementsService.deleteUserAchievements(
-        data.userAchievements[0].userId,
-      );
-      await this.tagOnTaskService.deleteTagsOnTasks(
-        data.tagsOnTask[0].taskUserId,
-      );
-      await this.taskService.deleteTasks(data.tasks[0].userId);
-      await this.tagService.deleteTags(data.tags[0].userId);
-      await this.listService.deleteLists(data.lists[0].userId);
-      await this.categoryService.deleteCategories(data.categories[0].userId);
+      await this.notificationService.deleteNotifications(userId);
+      await this.userAchievementsService.deleteUserAchievements(userId);
+      await this.tagOnTaskService.deleteTagsOnTasks(userId);
+      await this.taskService.deleteTasks(userId);
+      await this.tagService.deleteTags(userId);
+      await this.listService.deleteLists(userId);
+      await this.categoryService.deleteCategories(userId);
 
       await this.categoryService.insertCategories(data.categories);
       await this.listService.insertLists(data.lists);

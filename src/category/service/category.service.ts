@@ -16,6 +16,9 @@ export class CategoryService {
   }
 
   async insertCategories(categories: Array<Category>): Promise<void> {
+    if (categories.length === 0) {
+      return;
+    }
     await this.db.insert(categoriesTable).values(categories);
   }
 

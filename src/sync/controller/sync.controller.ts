@@ -11,8 +11,13 @@ export class SyncController {
   ) {}
 
   @Post()
-  async insertData(@Body() syncDTO: SyncDTO): Promise<void> {
-    await this.syncService.insertData(syncDTO);
+  async insertData(@Request() req, @Body() syncDTO: SyncDTO): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const token: string = req.headers.authorization as string;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const obj = await this.jwtDecodeService.decodeToken(token);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+    await this.syncService.insertData(obj.id, syncDTO);
   }
 
   @Get()

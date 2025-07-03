@@ -28,6 +28,9 @@ export class TagsOnTaskService {
   }
 
   async insertTagsOnTasks(tagsOnTask: Array<TagsOnTask>): Promise<void> {
+    if (tagsOnTask.length === 0) {
+      return;
+    }
     await this.db.insert(tagsOnTaskTable).values(tagsOnTask);
   }
 

@@ -20,6 +20,9 @@ export class TagService {
   }
 
   async insertTags(tags: Array<Tag>): Promise<void> {
+    if (tags.length === 0) {
+      return;
+    }
     await this.db.insert(tagsTable).values(tags);
   }
 
