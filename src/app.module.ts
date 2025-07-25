@@ -14,6 +14,7 @@ import { NotificationModule } from './notification/notification.module';
 import { TaskModule } from './task/task.module';
 import { JwtConfigModule } from './utils/jwt-config.module';
 import { SyncModule } from './sync/sync.module';
+import { ServerValidationModule } from './server-validation/server-validation.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { SyncModule } from './sync/sync.module';
     UserAchievementModule,
     NotificationModule,
     SyncModule,
+    ServerValidationModule,
   ],
   controllers: [AppController],
   providers: [
