@@ -6,7 +6,7 @@ export class Task {
     public readonly userId: number,
     public readonly isDone: boolean,
     public readonly body?: string | null,
-    public readonly endTime?: number | null,
+    public readonly endTime?: string | null,
     public readonly frequency?: number | null,
     public readonly alert?: number | null,
     public readonly image?: string | null,

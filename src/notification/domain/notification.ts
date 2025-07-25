@@ -4,7 +4,7 @@ export class Notification {
     public readonly title: string,
     public readonly body: string,
     public readonly userId: number,
-    public readonly sendTime: number,
+    public readonly sendTime: string,
     public readonly isRead: boolean,
     public readonly taskId?: string | null,
     public readonly taskTitle?: string | null,

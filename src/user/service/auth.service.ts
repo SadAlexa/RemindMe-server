@@ -16,10 +16,6 @@ export class AuthService {
     if (user === undefined) {
       throw new BadRequestException('User not found');
     }
-
-    console.log(`DB password: "${user.password}"`);
-    console.log(`Password:    "${password}"`);
-
     const isMatch: boolean = bcrypt.compareSync(
       password + user.salt,
       user.password,

@@ -17,7 +17,7 @@ export const tasksTable = pgTable('tasks', {
   listId: uuid('list_id').notNull(),
   userId: integer('user_id').notNull(),
   body: text('body'),
-  endTime: integer('end_time'),
+  endTime: varchar('end_time'),
   frequency: integer('frequency'),
   alert: integer('alert'),
   image: text('image'),
