@@ -1,0 +1,44 @@
+# I suggest to move this file outside your project directory
+
+services:
+  backend:
+    build: ./remind-me-server
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=database_url #Your database URL
+      - JWT_SECRET=jwt_secret #Your JWT secret
+      - ACCESS_TOKEN_VALIDITY_DURATION_IN_SEC=3600
+    depends_on:
+      - database
+  database:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=password #Your password
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  nginx:
+    image: nginx:latest
+    env_file: .env # Your environment variables file
+    restart: unless-stopped
+    ports:
+      - 80:80 # For HTTP
+      - 443:443 # For HTTPS
+    depends_on:
+      - backend
+    volumes:
+      - ./remind-me-server/nginx.conf:/etc/nginx/templates/default.conf.template
+      - /etc/localtime:/etc/localtime:ro
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+      - ./nginx/99-autoreload.sh:/docker-entrypoint.d/99-autoreload.sh
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"

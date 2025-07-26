@@ -1,0 +1,6 @@
+# remane into .env
+
+# I suggest to move outside of your project directory
+
+APP_DOMAIN=example.com
+SSL_EMAIL=email@email.com

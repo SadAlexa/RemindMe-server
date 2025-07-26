@@ -15,13 +15,6 @@
       "when": 1753460095752,
       "tag": "0001_seed-users",
       "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1753463436525,
-      "tag": "0002_open_khan",
-      "breakpoints": true
     }
   ]
 }
