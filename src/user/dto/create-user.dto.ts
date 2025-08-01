@@ -12,12 +12,12 @@ export class CreateUserDto {
   username: string;
 
   @ApiProperty()
-  //@IsEmail()
+  @IsEmail()
   @IsNotEmpty({ message: 'email is required' })
   email: string;
 
   @ApiProperty()
-  //@IsStrongPassword()
+  @IsStrongPassword()
   @IsNotEmpty({ message: 'password is required' })
   password: string;
 }
